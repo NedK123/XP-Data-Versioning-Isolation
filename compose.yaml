@@ -1,4 +1,14 @@
 services:
+
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+      ports:
+        - "8080:8080"
+      depends_on:
+        - mongodb
+
   mongodb:
     image: 'mongo:latest'
     environment:

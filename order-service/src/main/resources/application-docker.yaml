@@ -1,0 +1,12 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: order-service
+  data:
+    mongodb:
+      host: mongodb
+      port: 27017
+      database: "mydatabase"
+      username: root
+      password: secret
