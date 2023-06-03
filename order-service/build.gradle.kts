@@ -18,6 +18,8 @@ repositories {
     mavenCentral()
 }
 
+extra["springDocVersion"] = "2.1.0"
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
@@ -26,6 +28,10 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${property("springDocVersion")}")
+
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

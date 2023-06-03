@@ -5,8 +5,8 @@ spring:
     name: order-service
   data:
     mongodb:
-      host: mongodb
-      port: 27017
+      host: mongo
+      port: 27020
       database: "mydatabase"
       username: root
       password: secret
