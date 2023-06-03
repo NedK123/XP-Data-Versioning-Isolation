@@ -13,5 +13,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class OrderValidationDefinition {
     private String id;
+    private String name;
     private Set<OrderChecks> checks;
 }

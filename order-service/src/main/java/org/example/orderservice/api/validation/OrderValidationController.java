@@ -34,7 +34,8 @@ public class OrderValidationController implements OrderValidationApi {
     }
 
     private static CreateOrderValidationDefinitionRequest map(CreateOrderValidationDefinitionApiRequest request) {
-        return CreateOrderValidationDefinitionRequest.builder().checks(request.getChecks().stream().map(OrderChecks::valueOf).collect(Collectors.toSet())).build();
+        return CreateOrderValidationDefinitionRequest.builder().name(request.getName())
+                .checks(request.getChecks().stream().map(OrderChecks::valueOf).collect(Collectors.toSet())).build();
     }
 
 }

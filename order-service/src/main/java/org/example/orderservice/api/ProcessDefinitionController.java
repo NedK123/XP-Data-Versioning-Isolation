@@ -2,15 +2,14 @@ package org.example.orderservice.api;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.orderservice.core.process.CreateOrderProcessDefinitionRequest;
-import org.example.orderservice.core.process.OrderProcessDefinition;
-import org.example.orderservice.core.process.OrderProcessDefinitionException;
-import org.example.orderservice.core.process.ProcessDefinitionService;
+import org.example.orderservice.core.process.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -26,14 +25,34 @@ public class ProcessDefinitionController implements ProcessDefinitionApi {
     }
 
     @Override
-    public ResponseEntity<OrderProcessDefinition> fetch(String definitionId) throws OrderProcessDefinitionException {
+    public ResponseEntity<OrderProcessDefinition> fetch(String definitionId) throws OrderProcessDefinitionNotFoundException {
         OrderProcessDefinition definition = processDefinitionService.fetch(definitionId);
         return ResponseEntity.ok(definition);
     }
 
-    @ExceptionHandler(OrderProcessDefinitionException.class)
-    public ResponseEntity<String> handle(OrderProcessDefinitionException ex) {
+    @Override
+    public ResponseEntity<Void> edit(String definitionId, EditOrderProcessDefinitionApiRequest request) throws OrderProcessDefinitionNotFoundException {
+        processDefinitionService.edit(definitionId, buildEditRequest(request));
+        return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(OrderProcessDefinitionNotFoundException.class)
+    public ResponseEntity<String> handle(OrderProcessDefinitionNotFoundException ex) {
         return ResponseEntity.notFound().build();
+    }
+
+    private static EditOrderProcessDefinitionRequest buildEditRequest(EditOrderProcessDefinitionApiRequest request) {
+        EditOrderProcessDefinitionRequest.EditOrderProcessDefinitionRequestBuilder builder = EditOrderProcessDefinitionRequest.builder();
+        if (Objects.nonNull(request.getName())) {
+            builder.name(Optional.of(request.getName()));
+        }
+        if (Objects.nonNull(request.getValidationDefinitions())) {
+            builder.validationDefinitions(Optional.of(request.getValidationDefinitions()));
+        }
+        if (Objects.nonNull(request.getShippingPreparationDefinition())) {
+            builder.shippingPreparationDefinition(Optional.of(request.getShippingPreparationDefinition()));
+        }
+        return builder.build();
     }
 
     private static URI resourceLocation(OrderProcessDefinition processDefinition) {
@@ -42,7 +61,7 @@ public class ProcessDefinitionController implements ProcessDefinitionApi {
 
     private CreateOrderProcessDefinitionRequest map(CreateOrderProcessDefinitionApiRequest request) {
         return CreateOrderProcessDefinitionRequest.builder().validationDefinitions(request.getValidationDefinitions())
-                .shippingPreparationDefinition(request.getShippingPreparationDefinition()).build();
+                .name(request.getName()).shippingPreparationDefinition(request.getShippingPreparationDefinition()).build();
     }
 
 }

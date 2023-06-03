@@ -18,6 +18,7 @@ import java.util.List;
 public class OrderProcessDefinitionEntity implements Serializable {
     @Id
     private String id;
+    private String name;
     private List<String> validationDefinitions;
     private String shippingPreparationDefinition;
 }

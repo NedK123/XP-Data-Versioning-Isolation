@@ -15,8 +15,12 @@ public class ProcessDefinitionService {
         return storage.create(request);
     }
 
-    public OrderProcessDefinition fetch(String id) throws OrderProcessDefinitionException {
+    public OrderProcessDefinition fetch(String id) throws OrderProcessDefinitionNotFoundException {
         return storage.fetch(id);
+    }
+
+    public void edit(String id, EditOrderProcessDefinitionRequest request) throws OrderProcessDefinitionNotFoundException {
+        storage.edit(id, request);
     }
 
 }

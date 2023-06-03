@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateOrderProcessDefinitionApiRequest implements Serializable {
+    private String name;
     private List<String> validationDefinitions;
     private String shippingPreparationDefinition;
 }

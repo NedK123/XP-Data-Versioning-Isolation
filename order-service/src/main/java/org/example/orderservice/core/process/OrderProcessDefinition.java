@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderProcessDefinition {
     private String id;
+    private String name;
     private List<String> validationDefinitions;
     private String shippingPreparationDefinition;
 }

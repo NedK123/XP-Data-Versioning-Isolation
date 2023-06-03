@@ -12,5 +12,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateOrderValidationDefinitionRequest {
+    private String name;
     private Set<OrderChecks> checks;
 }

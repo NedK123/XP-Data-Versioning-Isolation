@@ -13,5 +13,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateOrderValidationDefinitionApiRequest implements Serializable {
+    private String name;
     private Set<String> checks;
 }

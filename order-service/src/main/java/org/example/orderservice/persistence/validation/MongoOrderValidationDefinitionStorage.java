@@ -30,7 +30,7 @@ public class MongoOrderValidationDefinitionStorage implements OrderValidationDef
 
     private static OrderValidationDefinitionEntity toPersistenceModel(CreateOrderValidationDefinitionRequest request) {
         return OrderValidationDefinitionEntity.builder().id(UUID.randomUUID().toString())
-                .checks(map(request)).build();
+                .name(request.getName()).checks(map(request)).build();
     }
 
     private static Set<String> map(CreateOrderValidationDefinitionRequest request) {
@@ -38,7 +38,7 @@ public class MongoOrderValidationDefinitionStorage implements OrderValidationDef
     }
 
     private OrderValidationDefinition toDomainModel(OrderValidationDefinitionEntity entity) {
-        return OrderValidationDefinition.builder().id(entity.getId()).checks(map(entity)).build();
+        return OrderValidationDefinition.builder().id(entity.getId()).name(entity.getName()).checks(map(entity)).build();
     }
 
     private static Set<OrderChecks> map(OrderValidationDefinitionEntity entity) {

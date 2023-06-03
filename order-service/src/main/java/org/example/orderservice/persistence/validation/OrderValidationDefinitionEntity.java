@@ -20,5 +20,6 @@ import java.util.Set;
 public class OrderValidationDefinitionEntity implements Serializable {
     @Id
     private String id;
+    private String name;
     private Set<String> checks;
 }

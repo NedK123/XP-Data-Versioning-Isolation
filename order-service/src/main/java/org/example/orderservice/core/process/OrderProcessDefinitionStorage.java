@@ -4,6 +4,8 @@ public interface OrderProcessDefinitionStorage {
 
     OrderProcessDefinition create(CreateOrderProcessDefinitionRequest request);
 
-    OrderProcessDefinition fetch(String id) throws OrderProcessDefinitionException;
+    OrderProcessDefinition fetch(String id) throws OrderProcessDefinitionNotFoundException;
+
+    void edit(String id, EditOrderProcessDefinitionRequest request) throws OrderProcessDefinitionNotFoundException;
 
 }
