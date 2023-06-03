@@ -2,10 +2,10 @@ package org.example.orderservice.persistence;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.orderservice.core.CreateOrderProcessDefinitionRequest;
-import org.example.orderservice.core.OrderProcessDefinitionException;
-import org.example.orderservice.core.OrderProcessDefinitionStorage;
-import org.example.orderservice.process.OrderProcessDefinition;
+import org.example.orderservice.core.process.CreateOrderProcessDefinitionRequest;
+import org.example.orderservice.core.process.OrderProcessDefinition;
+import org.example.orderservice.core.process.OrderProcessDefinitionException;
+import org.example.orderservice.core.process.OrderProcessDefinitionStorage;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

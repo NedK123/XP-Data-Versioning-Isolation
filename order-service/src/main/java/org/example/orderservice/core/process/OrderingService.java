@@ -1,4 +1,4 @@
-package org.example.orderservice;
+package org.example.orderservice.core.process;
 
 import java.util.List;
 

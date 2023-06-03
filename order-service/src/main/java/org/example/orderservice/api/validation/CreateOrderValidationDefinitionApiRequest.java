@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateOrderValidationDefinitionApiRequest implements Serializable {
-    private List<String> checks;
+    private Set<String> checks;
 }

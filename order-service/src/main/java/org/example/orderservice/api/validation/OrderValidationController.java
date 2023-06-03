@@ -2,15 +2,13 @@ package org.example.orderservice.api.validation;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.orderservice.core.validation.CreateOrderValidationDefinitionRequest;
-import org.example.orderservice.core.validation.OrderValidationDefinition;
-import org.example.orderservice.core.validation.OrderValidationDefinitionNotFoundException;
-import org.example.orderservice.core.validation.OrderValidationDefinitionService;
+import org.example.orderservice.core.validation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -21,7 +19,7 @@ public class OrderValidationController implements OrderValidationApi {
 
     @Override
     public ResponseEntity<String> create(CreateOrderValidationDefinitionApiRequest request) {
-        OrderValidationDefinition definition = validationService.create(CreateOrderValidationDefinitionRequest.builder().build());
+        OrderValidationDefinition definition = validationService.create(map(request));
         return ResponseEntity.created(URI.create(definition.getId())).build();
     }
 
@@ -33,6 +31,10 @@ public class OrderValidationController implements OrderValidationApi {
     @ExceptionHandler(OrderValidationDefinitionNotFoundException.class)
     public ResponseEntity<String> handle(OrderValidationDefinitionNotFoundException ex) {
         return ResponseEntity.notFound().build();
+    }
+
+    private static CreateOrderValidationDefinitionRequest map(CreateOrderValidationDefinitionApiRequest request) {
+        return CreateOrderValidationDefinitionRequest.builder().checks(request.getChecks().stream().map(OrderChecks::valueOf).collect(Collectors.toSet())).build();
     }
 
 }

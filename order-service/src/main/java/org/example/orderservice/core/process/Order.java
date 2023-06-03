@@ -1,9 +1,10 @@
-package org.example.orderservice;
+package org.example.orderservice.core.process;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.orderservice.OrderType;
 
 import java.io.Serializable;
 

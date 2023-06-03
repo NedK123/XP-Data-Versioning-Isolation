@@ -1,6 +1,4 @@
-package org.example.orderservice.core;
-
-import org.example.orderservice.process.OrderProcessDefinition;
+package org.example.orderservice.core.process;
 
 public interface OrderProcessDefinitionStorage {
 

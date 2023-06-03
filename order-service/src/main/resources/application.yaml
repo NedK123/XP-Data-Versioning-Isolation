@@ -3,9 +3,17 @@ server:
 spring:
   application:
     name: order-service
+  datasource:
+    username: myuser
+    password: secret
+    url: jdbc:postgresql://localhost:5433/mydatabase
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
   data:
     mongodb:
-      host: mongodb
+      host: localhost
       port: 27017
       database: "mydatabase"
       username: root

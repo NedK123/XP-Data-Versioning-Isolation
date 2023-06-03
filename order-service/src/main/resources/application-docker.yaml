@@ -3,6 +3,16 @@ server:
 spring:
   application:
     name: order-service
+  datasource:
+    username: myuser
+    password: secret
+    url: jdbc:postgresql://host.docker.internal:5433/mydatabase
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
   data:
     mongodb:
       host: mongodb

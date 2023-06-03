@@ -1,7 +1,7 @@
 package org.example.orderservice.api;
 
-import org.example.orderservice.core.OrderProcessDefinitionException;
-import org.example.orderservice.process.OrderProcessDefinition;
+import org.example.orderservice.core.process.OrderProcessDefinition;
+import org.example.orderservice.core.process.OrderProcessDefinitionException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

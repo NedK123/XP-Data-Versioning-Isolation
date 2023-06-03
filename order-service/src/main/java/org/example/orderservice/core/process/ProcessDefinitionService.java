@@ -1,8 +1,7 @@
-package org.example.orderservice.core;
+package org.example.orderservice.core.process;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.orderservice.process.OrderProcessDefinition;
 import org.springframework.stereotype.Service;
 
 @Service

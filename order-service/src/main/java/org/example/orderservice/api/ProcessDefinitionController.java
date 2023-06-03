@@ -2,10 +2,10 @@ package org.example.orderservice.api;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.orderservice.core.CreateOrderProcessDefinitionRequest;
-import org.example.orderservice.core.OrderProcessDefinitionException;
-import org.example.orderservice.core.ProcessDefinitionService;
-import org.example.orderservice.process.OrderProcessDefinition;
+import org.example.orderservice.core.process.CreateOrderProcessDefinitionRequest;
+import org.example.orderservice.core.process.OrderProcessDefinition;
+import org.example.orderservice.core.process.OrderProcessDefinitionException;
+import org.example.orderservice.core.process.ProcessDefinitionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;

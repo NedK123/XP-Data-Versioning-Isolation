@@ -1,4 +1,4 @@
-package org.example.orderservice.process;
+package org.example.orderservice.core.process;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderProcessDefinition {
-    private String id;
+public class CreateOrderProcessDefinitionRequest {
     private List<String> validationDefinitions;
     private String shippingPreparationDefinition;
 }

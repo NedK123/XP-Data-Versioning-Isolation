@@ -9,6 +9,7 @@ services:
       - "8080:8080"
     depends_on:
       - mongodb
+      - postgres
 
   mongodb:
     image: 'mongo:latest'
@@ -22,10 +23,10 @@ services:
       - ./data:/data/db
 
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:15'
     environment:
       - 'POSTGRES_DB=mydatabase'
       - 'POSTGRES_PASSWORD=secret'
       - 'POSTGRES_USER=myuser'
     ports:
-      - '5432'
+      - '5433:5432'
