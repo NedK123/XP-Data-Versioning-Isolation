@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("order-process/definitions")
+@RequestMapping("order/process/definitions")
 public interface ProcessDefinitionApi {
 
     @PostMapping("")
