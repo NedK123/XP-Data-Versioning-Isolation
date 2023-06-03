@@ -8,16 +8,16 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - mongo
+      - mongodb
 
-  mongo:
+  mongodb:
     image: 'mongo:latest'
     environment:
       - 'MONGO_INITDB_DATABASE=mydatabase'
       - 'MONGO_INITDB_ROOT_PASSWORD=secret'
       - 'MONGO_INITDB_ROOT_USERNAME=root'
     ports:
-      - '27020:27017'
+      - '27017:27017'
     volumes:
       - ./data:/data/db
 
