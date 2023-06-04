@@ -1,4 +1,4 @@
-package org.example.orderservice.persistence;
+package org.example.orderservice.persistence.process;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

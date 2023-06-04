@@ -2,6 +2,7 @@ package org.example.orderservice.persistence.validation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.orderservice.core.validation.*;
+import org.example.orderservice.persistence.DefinitionEntitiesFetcher;
 import org.example.orderservice.persistence.DefinitionEntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -62,7 +63,7 @@ public class OrderValidationDefinitionStorage implements IOrderValidationDefinit
 
     private OrderValidationDefinitionEntity fetchEntity(String id, Date date) throws OrderValidationDefinitionNotFoundException {
         try {
-            return entityFetcher.fetch(id, date);
+            return entityFetcher.fetch(id, date, OrderValidationDefinitionEntity.class);
         } catch (DefinitionEntityNotFoundException e) {
             throw new OrderValidationDefinitionNotFoundException(e);
         }
@@ -70,7 +71,7 @@ public class OrderValidationDefinitionStorage implements IOrderValidationDefinit
 
     private OrderValidationDefinitionEntity fetchEntity(String id) throws OrderValidationDefinitionNotFoundException {
         try {
-            return entityFetcher.fetch(id);
+            return entityFetcher.fetch(id, OrderValidationDefinitionEntity.class);
         } catch (DefinitionEntityNotFoundException e) {
             throw new OrderValidationDefinitionNotFoundException(e);
         }
@@ -78,7 +79,7 @@ public class OrderValidationDefinitionStorage implements IOrderValidationDefinit
 
     private OrderValidationDefinitionEntity fetchEntity(String id, Optional<Integer> revisionId) throws OrderValidationDefinitionNotFoundException {
         try {
-            return entityFetcher.fetch(id, revisionId.get());
+            return entityFetcher.fetch(id, revisionId.get(), OrderValidationDefinitionEntity.class);
         } catch (DefinitionEntityNotFoundException e) {
             throw new OrderValidationDefinitionNotFoundException(e);
         }

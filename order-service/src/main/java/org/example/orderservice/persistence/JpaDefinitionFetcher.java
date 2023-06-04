@@ -1,8 +1,7 @@
-package org.example.orderservice.persistence.validation;
+package org.example.orderservice.persistence;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.orderservice.persistence.DefinitionEntityNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.history.Revision;
 import org.springframework.data.history.RevisionMetadata;
@@ -22,7 +21,7 @@ public class JpaDefinitionFetcher<T> extends AbstractDefinitionEntitiesFetcher<T
     private RevisionRepository<T, String, Integer> readRepo;
 
     @Override
-    public T fetch(String definitionId, Date date) throws DefinitionEntityNotFoundException {
+    public T fetch(String definitionId, Date date, Class<T> clazz) throws DefinitionEntityNotFoundException {
         Instant queryInstant = Instant.ofEpochMilli(date.getTime());
         log.info("The query date={}", date);
         return readRepo.findRevisions(definitionId).stream()
@@ -34,7 +33,7 @@ public class JpaDefinitionFetcher<T> extends AbstractDefinitionEntitiesFetcher<T
     }
 
     @Override
-    public T fetch(String definitionId) throws DefinitionEntityNotFoundException {
+    public T fetch(String definitionId, Class<T> clazz) throws DefinitionEntityNotFoundException {
         return readRepo.findLastChangeRevision(definitionId)
                 .filter(JpaDefinitionFetcher::isNotADeleteRevision)
                 .map(Revision::getEntity)
@@ -42,7 +41,7 @@ public class JpaDefinitionFetcher<T> extends AbstractDefinitionEntitiesFetcher<T
     }
 
     @Override
-    public T fetch(String definitionId, int revision) throws DefinitionEntityNotFoundException {
+    public T fetch(String definitionId, int revision, Class<T> clazz) throws DefinitionEntityNotFoundException {
         return readRepo.findRevision(definitionId, revision)
                 .map(Revision::getEntity)
                 .orElseThrow(DefinitionEntityNotFoundException::new);

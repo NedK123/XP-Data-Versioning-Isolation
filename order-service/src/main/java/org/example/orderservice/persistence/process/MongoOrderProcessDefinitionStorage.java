@@ -1,4 +1,4 @@
-package org.example.orderservice.persistence;
+package org.example.orderservice.persistence.process;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

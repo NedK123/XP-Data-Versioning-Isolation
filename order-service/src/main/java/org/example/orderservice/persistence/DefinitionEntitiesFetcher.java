@@ -1,6 +1,4 @@
-package org.example.orderservice.persistence.validation;
-
-import org.example.orderservice.persistence.DefinitionEntityNotFoundException;
+package org.example.orderservice.persistence;
 
 import java.util.Date;
 
@@ -11,28 +9,31 @@ public interface DefinitionEntitiesFetcher<T> {
      *
      * @param definitionId
      * @param date
-     * @return T
+     * @param clazz
+     * @return
      * @throws DefinitionEntityNotFoundException
      */
-    T fetch(String definitionId, Date date) throws DefinitionEntityNotFoundException;
+    T fetch(String definitionId, Date date, Class<T> clazz) throws DefinitionEntityNotFoundException;
 
     /**
      * Returns the latest revision
      *
      * @param definitionId
-     * @return T
+     * @param clazz
+     * @return
      * @throws DefinitionEntityNotFoundException
      */
-    T fetch(String definitionId) throws DefinitionEntityNotFoundException;
+    T fetch(String definitionId, Class<T> clazz) throws DefinitionEntityNotFoundException;
 
     /**
      * Returns the specified revision
      *
      * @param definitionId
      * @param revision
-     * @return T
+     * @param clazz
+     * @return
      * @throws DefinitionEntityNotFoundException
      */
-    T fetch(String definitionId, int revision) throws DefinitionEntityNotFoundException;
+    T fetch(String definitionId, int revision, Class<T> clazz) throws DefinitionEntityNotFoundException;
 
 }
