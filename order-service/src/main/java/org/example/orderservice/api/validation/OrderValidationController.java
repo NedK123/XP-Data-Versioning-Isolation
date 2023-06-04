@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,13 +29,40 @@ public class OrderValidationController implements OrderValidationApi {
     }
 
     @Override
-    public ResponseEntity<OrderValidationDefinition> fetch(String definitionId) throws OrderValidationDefinitionNotFoundException {
-        return ResponseEntity.ok(validationService.fetch(definitionId));
+    public ResponseEntity<OrderValidationDefinition> fetch(String definitionId, Optional<Integer> revisionId) throws OrderValidationDefinitionNotFoundException {
+        return ResponseEntity.ok(validationService.fetch(definitionId, revisionId));
+    }
+
+    @Override
+    public ResponseEntity<OrderValidationDefinition> fetch(String definitionId, String dateString) throws OrderValidationDefinitionNotFoundException, ParseException {
+        log.info("Received fetch validation definition({}) on time request with date={}", definitionId, dateString);
+        return ResponseEntity.ok(validationService.fetch(definitionId, from(dateString)));
+    }
+
+    @Override
+    public ResponseEntity<Void> edit(String definitionId, EditOrderValidationDefinitionApiRequest request) throws OrderValidationDefinitionNotFoundException {
+        validationService.edit(definitionId, buildEditRequest(request));
+        return ResponseEntity.ok().build();
     }
 
     @ExceptionHandler(OrderValidationDefinitionNotFoundException.class)
     public ResponseEntity<String> handle(OrderValidationDefinitionNotFoundException ex) {
         return ResponseEntity.notFound().build();
+    }
+
+    private Date from(String value) throws ParseException {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(value);
+    }
+
+    private static EditOrderValidationDefinitionRequest buildEditRequest(EditOrderValidationDefinitionApiRequest request) {
+        EditOrderValidationDefinitionRequest.EditOrderValidationDefinitionRequestBuilder builder = EditOrderValidationDefinitionRequest.builder();
+        if (Objects.nonNull(request.getName())) {
+            builder.name(Optional.of(request.getName()));
+        }
+        if (Objects.nonNull(request.getChecks())) {
+            builder.checks(Optional.of(request.getChecks().stream().map(OrderChecks::valueOf).collect(Collectors.toSet())));
+        }
+        return builder.build();
     }
 
     private static CreateOrderValidationDefinitionRequest map(CreateOrderValidationDefinitionApiRequest request) {

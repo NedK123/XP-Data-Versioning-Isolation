@@ -13,10 +13,18 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+      org:
+        hibernate:
+          envers:
+            audit_table_prefix: AUDIT_
+            revision_field_name: revision
+            revision_type_field_name: revision_type
+            audit_strategy: org.hibernate.envers.strategy.ValidityAuditStrategy
+            store_data_at_delete: true
   data:
     mongodb:
       host: mongodb
-      port: 27017
+      port: 27019
       database: "mydatabase"
       username: root
       password: secret

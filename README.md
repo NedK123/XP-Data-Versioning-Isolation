@@ -1,3 +1,3 @@
-# XP-TransactionIsolation
+# XP-Data-Versioning-Isolation
 
-This project is for researching/experimenting with isolation algorithms in distributed systems.
+This project is for researching/experimenting with data versioning and isolation algorithms in distributed systems.
