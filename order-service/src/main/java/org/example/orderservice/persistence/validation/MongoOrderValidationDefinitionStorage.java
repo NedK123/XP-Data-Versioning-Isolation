@@ -1,22 +1,32 @@
 package org.example.orderservice.persistence.validation;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.orderservice.core.validation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.history.Revision;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.*;
+import java.util.Date;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 @Slf4j
 public class MongoOrderValidationDefinitionStorage implements OrderValidationDefinitionStorage {
 
+    @Autowired
     private MongoOrderValidationDefinitionRepo repo;
+
+    @Autowired
     private MongoReadOrderValidationDefinitionRepo readRepo;
+
+    @Autowired
+    @Qualifier("AuditQuery")
+    private OrderValidationDefinitionEntitiesFetcher entityFetcher;
+
 
     @Override
     public OrderValidationDefinition create(CreateOrderValidationDefinitionRequest request) {
@@ -31,13 +41,8 @@ public class MongoOrderValidationDefinitionStorage implements OrderValidationDef
     }
 
     @Override
-    public OrderValidationDefinition fetch(String id, Date time) throws OrderValidationDefinitionNotFoundException {
-        Instant queryInstant = Instant.ofEpochMilli(time.getTime());
-        log.info("The query date={}", queryInstant);
-        return readRepo.findRevisions(id).stream()
-                .filter(revision -> revision.getRevisionInstant().get().isBefore(queryInstant)).sorted(Comparator.reverseOrder())
-                .findFirst().map(revision -> toDomainModel(revision.getEntity()))
-                .orElseThrow(OrderValidationDefinitionNotFoundException::new);
+    public OrderValidationDefinition fetch(String id, Date date) throws OrderValidationDefinitionNotFoundException {
+        return entityFetcher.fetch(id, date);
     }
 
     @Override

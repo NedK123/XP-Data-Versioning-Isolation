@@ -1,2 +1,2 @@
-rootProject.name = "XP-TransactionIsolation"
+rootProject.name = "XP-Data-Versioning-Isolation"
 include("order-service")
