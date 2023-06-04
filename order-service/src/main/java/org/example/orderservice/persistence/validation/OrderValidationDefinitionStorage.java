@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class MongoOrderValidationDefinitionStorage implements OrderValidationDefinitionStorage {
+public class OrderValidationDefinitionStorage implements IOrderValidationDefinitionStorage {
 
     @Autowired
     private MongoOrderValidationDefinitionRepo repo;

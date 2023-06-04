@@ -13,10 +13,10 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
-@Qualifier("AuditQuery")
+@Qualifier("AuditReader")
 @AllArgsConstructor
 @Slf4j
-public class AuditQueryOrderValidationDefinitionEntitiesFetcher extends AbstractOrderValidationDefinitionEntitiesFetcher {
+public class AuditReaderOrderValidationDefinitionEntitiesFetcher extends AbstractOrderValidationDefinitionEntitiesFetcher {
 
     private AuditReader auditReader;
 

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Slf4j
 public class OrderValidationDefinitionService {
 
-    private OrderValidationDefinitionStorage storage;
+    private IOrderValidationDefinitionStorage storage;
 
     public OrderValidationDefinition create(CreateOrderValidationDefinitionRequest request) {
         return storage.create(request);

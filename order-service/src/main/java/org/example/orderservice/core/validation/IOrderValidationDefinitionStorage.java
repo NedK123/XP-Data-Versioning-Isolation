@@ -3,7 +3,7 @@ package org.example.orderservice.core.validation;
 import java.util.Date;
 import java.util.Optional;
 
-public interface OrderValidationDefinitionStorage {
+public interface IOrderValidationDefinitionStorage {
 
     OrderValidationDefinition create(CreateOrderValidationDefinitionRequest request);
 
