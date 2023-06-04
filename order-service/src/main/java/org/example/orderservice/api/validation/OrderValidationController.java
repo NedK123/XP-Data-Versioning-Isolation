@@ -34,14 +34,20 @@ public class OrderValidationController implements OrderValidationApi {
     }
 
     @Override
-    public ResponseEntity<OrderValidationDefinition> fetch(String definitionId, String dateString) throws OrderValidationDefinitionNotFoundException, ParseException {
-        log.info("Received fetch validation definition({}) on time request with date={}", definitionId, dateString);
-        return ResponseEntity.ok(validationService.fetch(definitionId, from(dateString)));
+    public ResponseEntity<OrderValidationDefinition> fetch(String definitionId, String mostRecentAtDate) throws OrderValidationDefinitionNotFoundException, ParseException {
+        log.info("Received fetch validation definition({}) on time request with date={}", definitionId, mostRecentAtDate);
+        return ResponseEntity.ok(validationService.fetch(definitionId, from(mostRecentAtDate)));
     }
 
     @Override
     public ResponseEntity<Void> edit(String definitionId, EditOrderValidationDefinitionApiRequest request) throws OrderValidationDefinitionNotFoundException {
         validationService.edit(definitionId, buildEditRequest(request));
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(String definitionId) throws OrderValidationDefinitionNotFoundException {
+        validationService.delete(definitionId);
         return ResponseEntity.ok().build();
     }
 

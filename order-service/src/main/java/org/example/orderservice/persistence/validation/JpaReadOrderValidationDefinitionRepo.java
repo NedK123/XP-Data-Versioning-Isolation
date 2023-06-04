@@ -4,6 +4,6 @@ import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MongoReadOrderValidationDefinitionRepo extends RevisionRepository<OrderValidationDefinitionEntity, String, Integer> {
+public interface JpaReadOrderValidationDefinitionRepo extends RevisionRepository<OrderValidationDefinitionEntity, String, Integer> {
 
 }

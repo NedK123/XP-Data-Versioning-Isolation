@@ -18,9 +18,12 @@ public interface OrderValidationApi {
     ResponseEntity<OrderValidationDefinition> fetch(@PathVariable("id") String definitionId, @RequestParam("revision") Optional<Integer> revisionId) throws OrderValidationDefinitionNotFoundException;
 
     @GetMapping("definitions/{id}/time")
-    ResponseEntity<OrderValidationDefinition> fetch(@PathVariable("id") String definitionId, @RequestParam("date") String date) throws OrderValidationDefinitionNotFoundException, ParseException;
+    ResponseEntity<OrderValidationDefinition> fetch(@PathVariable("id") String definitionId, @RequestParam(value = "mostRecentAtDate", defaultValue = "2023-07-07 14:50:20") String mostRecentAtDate) throws OrderValidationDefinitionNotFoundException, ParseException;
 
     @PutMapping("definitions/{id}")
     ResponseEntity<Void> edit(String definitionId, EditOrderValidationDefinitionApiRequest request) throws OrderValidationDefinitionNotFoundException;
+
+    @DeleteMapping("definitions/{id}")
+    ResponseEntity<Void> delete(String definitionId) throws OrderValidationDefinitionNotFoundException;
 
 }

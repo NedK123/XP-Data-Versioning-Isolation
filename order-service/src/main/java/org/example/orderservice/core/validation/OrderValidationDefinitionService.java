@@ -30,4 +30,8 @@ public class OrderValidationDefinitionService {
         storage.edit(definitionId, request);
     }
 
+    public void delete(String definitionId) throws OrderValidationDefinitionNotFoundException {
+        storage.delete(definitionId);
+    }
+
 }
