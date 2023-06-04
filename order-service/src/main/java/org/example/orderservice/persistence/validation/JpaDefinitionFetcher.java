@@ -2,10 +2,11 @@ package org.example.orderservice.persistence.validation;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.orderservice.core.validation.OrderValidationDefinitionNotFoundException;
+import org.example.orderservice.persistence.DefinitionEntityNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.history.Revision;
 import org.springframework.data.history.RevisionMetadata;
+import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -16,38 +17,38 @@ import java.util.Date;
 @Qualifier("JPA")
 @AllArgsConstructor
 @Slf4j
-public class JpaOrderValidationDefinitionFetcher extends AbstractOrderValidationDefinitionEntitiesFetcher {
+public class JpaDefinitionFetcher<T> extends AbstractDefinitionEntitiesFetcher<T> {
 
-    private JpaReadOrderValidationDefinitionRepo readRepo;
+    private RevisionRepository<T, String, Integer> readRepo;
 
     @Override
-    public OrderValidationDefinitionEntity fetch(String definitionId, Date date) throws OrderValidationDefinitionNotFoundException {
+    public T fetch(String definitionId, Date date) throws DefinitionEntityNotFoundException {
         Instant queryInstant = Instant.ofEpochMilli(date.getTime());
         log.info("The query date={}", date);
         return readRepo.findRevisions(definitionId).stream()
                 .filter(revision -> revision.getRevisionInstant().get().isBefore(queryInstant)).sorted(Comparator.reverseOrder())
                 .findFirst()
-                .filter(JpaOrderValidationDefinitionFetcher::isNotADeleteRevision)
+                .filter(JpaDefinitionFetcher::isNotADeleteRevision)
                 .map(Revision::getEntity)
-                .orElseThrow(OrderValidationDefinitionNotFoundException::new);
+                .orElseThrow(DefinitionEntityNotFoundException::new);
     }
 
     @Override
-    public OrderValidationDefinitionEntity fetch(String definitionId) throws OrderValidationDefinitionNotFoundException {
+    public T fetch(String definitionId) throws DefinitionEntityNotFoundException {
         return readRepo.findLastChangeRevision(definitionId)
-                .filter(JpaOrderValidationDefinitionFetcher::isNotADeleteRevision)
+                .filter(JpaDefinitionFetcher::isNotADeleteRevision)
                 .map(Revision::getEntity)
-                .orElseThrow(OrderValidationDefinitionNotFoundException::new);
+                .orElseThrow(DefinitionEntityNotFoundException::new);
     }
 
     @Override
-    public OrderValidationDefinitionEntity fetch(String definitionId, int revision) throws OrderValidationDefinitionNotFoundException {
+    public T fetch(String definitionId, int revision) throws DefinitionEntityNotFoundException {
         return readRepo.findRevision(definitionId, revision)
                 .map(Revision::getEntity)
-                .orElseThrow(OrderValidationDefinitionNotFoundException::new);
+                .orElseThrow(DefinitionEntityNotFoundException::new);
     }
 
-    private static boolean isNotADeleteRevision(Revision<Integer, OrderValidationDefinitionEntity> s) {
+    private static <T> boolean isNotADeleteRevision(Revision<Integer, T> s) {
         return !RevisionMetadata.RevisionType.DELETE.equals(s.getMetadata().getRevisionType());
     }
 

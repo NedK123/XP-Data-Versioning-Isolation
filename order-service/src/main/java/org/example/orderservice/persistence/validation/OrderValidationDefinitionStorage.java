@@ -2,6 +2,7 @@ package org.example.orderservice.persistence.validation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.orderservice.core.validation.*;
+import org.example.orderservice.persistence.DefinitionEntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class OrderValidationDefinitionStorage implements IOrderValidationDefinit
 
     @Autowired
     @Qualifier("JPA")
-    private OrderValidationDefinitionEntitiesFetcher entityFetcher;
+    private DefinitionEntitiesFetcher<OrderValidationDefinitionEntity> entityFetcher;
 
 
     @Override
@@ -33,22 +34,22 @@ public class OrderValidationDefinitionStorage implements IOrderValidationDefinit
     @Override
     public OrderValidationDefinition fetch(String id, Optional<Integer> revisionId) throws OrderValidationDefinitionNotFoundException {
         if (revisionId.isPresent()) {
-            OrderValidationDefinitionEntity entity = entityFetcher.fetch(id, revisionId.get());
+            OrderValidationDefinitionEntity entity = fetchEntity(id, revisionId);
             return toDomainModel(entity);
         }
-        OrderValidationDefinitionEntity entity = entityFetcher.fetch(id);
+        OrderValidationDefinitionEntity entity = fetchEntity(id);
         return toDomainModel(entity);
     }
 
     @Override
     public OrderValidationDefinition fetch(String id, Date date) throws OrderValidationDefinitionNotFoundException {
-        OrderValidationDefinitionEntity entity = entityFetcher.fetch(id, date);
+        OrderValidationDefinitionEntity entity = fetchEntity(id, date);
         return toDomainModel(entity);
     }
 
     @Override
     public void edit(String id, EditOrderValidationDefinitionRequest request) throws OrderValidationDefinitionNotFoundException {
-        OrderValidationDefinitionEntity definitionEntity = entityFetcher.fetch(id);
+        OrderValidationDefinitionEntity definitionEntity = fetchEntity(id);
         request.ifContainsNameUpdate(definitionEntity::setName);
         request.ifContainsChecksUpdate(s -> definitionEntity.setChecks(s.stream().map(Enum::toString).collect(Collectors.toSet())));
         repo.save(definitionEntity);
@@ -57,6 +58,30 @@ public class OrderValidationDefinitionStorage implements IOrderValidationDefinit
     @Override
     public void delete(String definitionId) {
         repo.deleteById(definitionId);
+    }
+
+    private OrderValidationDefinitionEntity fetchEntity(String id, Date date) throws OrderValidationDefinitionNotFoundException {
+        try {
+            return entityFetcher.fetch(id, date);
+        } catch (DefinitionEntityNotFoundException e) {
+            throw new OrderValidationDefinitionNotFoundException(e);
+        }
+    }
+
+    private OrderValidationDefinitionEntity fetchEntity(String id) throws OrderValidationDefinitionNotFoundException {
+        try {
+            return entityFetcher.fetch(id);
+        } catch (DefinitionEntityNotFoundException e) {
+            throw new OrderValidationDefinitionNotFoundException(e);
+        }
+    }
+
+    private OrderValidationDefinitionEntity fetchEntity(String id, Optional<Integer> revisionId) throws OrderValidationDefinitionNotFoundException {
+        try {
+            return entityFetcher.fetch(id, revisionId.get());
+        } catch (DefinitionEntityNotFoundException e) {
+            throw new OrderValidationDefinitionNotFoundException(e);
+        }
     }
 
     protected OrderValidationDefinition toDomainModel(OrderValidationDefinitionEntity entity) {
