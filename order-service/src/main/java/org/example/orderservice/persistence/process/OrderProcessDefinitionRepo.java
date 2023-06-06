@@ -1,6 +1,8 @@
 package org.example.orderservice.persistence.process;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface OrderProcessDefinitionRepo extends MongoRepository<OrderProcessDefinitionEntity, String> {
+@Repository
+public interface OrderProcessDefinitionRepo extends CrudRepository<OrderProcessDefinitionEntity, String> {
 }

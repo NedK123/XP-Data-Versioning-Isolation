@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class OrderValidationDefinitionStorage implements IOrderValidationDefinitionStorage {
 
     @Autowired
-    private MongoOrderValidationDefinitionRepo repo;
+    private PostgresOrderValidationDefinitionRepo repo;
 
     @Autowired
     @Qualifier("JPA")

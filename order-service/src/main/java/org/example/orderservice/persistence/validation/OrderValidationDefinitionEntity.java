@@ -1,5 +1,6 @@
 package org.example.orderservice.persistence.validation;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -22,6 +23,7 @@ import java.util.Set;
 public class OrderValidationDefinitionEntity implements Serializable {
     @Id
     private String id;
+    @Column(unique = true)
     private String name;
     private Set<String> checks;
 }
