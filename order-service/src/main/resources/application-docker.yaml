@@ -23,8 +23,4 @@ spring:
             store_data_at_delete: true
   data:
     mongodb:
-      host: mongodb
-      port: 27019
-      database: "mydatabase"
-      username: root
-      password: secret
+      uri: mongodb://host.docker.internal:27019/mydatabase

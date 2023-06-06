@@ -7,14 +7,20 @@ spring:
     username: myuser
     password: secret
     url: jdbc:postgresql://localhost:5433/mydatabase
-    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+      org:
+        hibernate:
+          envers:
+            audit_table_prefix: AUDIT_
+            revision_field_name: revision
+            revision_type_field_name: revision_type
+            audit_strategy: org.hibernate.envers.strategy.ValidityAuditStrategy
+            store_data_at_delete: true
   data:
     mongodb:
-      host: localhost
-      port: 27019
-      database: "mydatabase"
-      username: root
-      password: secret
+      uri: mongodb://localhost:27019/mydatabase

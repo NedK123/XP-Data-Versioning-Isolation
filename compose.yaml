@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
 
   order-service:
@@ -15,8 +15,6 @@ services:
     image: 'mongo:6.0'
     environment:
       - 'MONGO_INITDB_DATABASE=mydatabase'
-      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
-      - 'MONGO_INITDB_ROOT_USERNAME=root'
     ports:
       - '27019:27017'
     volumes:
